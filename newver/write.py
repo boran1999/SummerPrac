@@ -6,7 +6,7 @@ import capnp
 this_dir = os.path.dirname(__file__)
 
 sd = capnp.load(os.path.join(this_dir, 'nodesd.capnp'))
-mes = sd.SDList.new_message()
+mes = sd.Node.new_message()
 datamas = np.array([1, 2, 3, 4, 5, 6])
 imagemas1 = np.random.random_sample((20, 20))
 imagemas2 = np.arange(5 * 10 * 10, dtype="uint8").reshape(5, 10, 10)
@@ -16,22 +16,21 @@ zeros = np.zeros((4, 256, 320), dtype='float32')
 arr1 = np.arange(4)
 arr2 = np.arange(4) + 10
 arr3 = np.arange(4, dtype='uint64')
-ds = mes.init('sundates', 1)
+ds = mes.init('nodes', 2)
 
-sunlight = ds[0]
-childs = sunlight.init('nodes', 2)
-tree1 = childs[0]
-tree1.id = 100
-tree1.name = 'TREE NUMBER 1'
-tree1.value.none = None
-child1 = childs[1]
+t1 = ds[0]
+#childs = sunlight.init('nodes', 2)
+t1.id = 100
+t1.name = 'TREE NUMBER 1'
+childs1 = t1.init('nodes', 1)
+#tree1.value.none = None
+child1 = childs1[0]
 child1.id = 101
 child1.name = 'data'
 arr1 = child1.value.init('arr')
 arr1.shape = datamas.shape
 arr1.dtype = str(datamas.dtype)
 arr1.data = datamas.tobytes()
-
 
 #smm = ds[1]
 #smm.id = 2
@@ -77,16 +76,31 @@ arr1.data = datamas.tobytes()
 #smm5.signal2.size = str(coss.shape)
 #smm5.signal2.type = str(coss.dtype)
 
-#smm6 = ds[6]
-#smm6.id = 7
-#smm6.name = 'image'
-#smm6.image.values = strins(imagemas1)
-#smm6.image.size = str(imagemas1.shape)
-#smm6.image.type = str(imagemas1.dtype)
-#smm6.timestamp = '123241241'
-#smm6.metadata.ipol = 2
-#smm6.metadata.pixelSize = 0.75
-#smm6.metadata.units = 'nm'
+smm6 = ds[1]
+smm6.id = 701
+smm6.name = 'TREE NUMBER 7'
+childs7 = smm6.init('nodes', 3)
+child71 = childs7[0]
+child71.name = 'image'
+arr7 = child71.value.init('arr')
+arr7.shape = imagemas1.shape
+arr7.dtype = str(imagemas1.dtype)
+arr7.data = imagemas1.tobytes()
+child72 = childs7[1]
+child72.name = 'metadata'
+mchilds = child72.init('nodes', 3)
+mchild1 = mchilds[0]
+mchild1.name = 'ipol'
+mchild1.value.num = 2
+mchild2 = mchilds[1]
+mchild2.name = 'pixelSize'
+mchild2.value.fnum = 0.75
+mchild3 = mchilds[2]
+mchild3.name = 'units'
+mchild3.value.text = 'nm'
+child73 = childs7[2]
+child73.name = 'timestamp'
+child73.value.text = '12323132'
 
 #smm71 = ds[7]
 #smm71.id = 8

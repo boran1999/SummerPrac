@@ -1,20 +1,18 @@
 @0x9c40586b883c8604;
 
-const qux :UInt32 = 123;
-
-struct Sundata {
-	struct Node {
-		id @0 :UInt32;
-		name @1: Text;
-		value : union {
-			none @2 : Void;
-			num @3 : UInt32;
-			text @4 : Text;
-			arr @5 : NDArray;
-		}
+struct Node {
+	id @0 :UInt32;
+	name @1 : Text;
+	value : union {
+		none @2 : Void;
+		num @3 : UInt32;
+		fnum @4 : Float32;
+		text @5 : Text;
+		arr @6 : NDArray;
 	}
-	nodes @0 : List(Node); 
+	nodes @7 : List(Node); 
 }
+
 
 struct NDArray {
 	shape @0 :List(UInt32);
@@ -35,11 +33,6 @@ struct NDArray {
 		float128 @11;
 	}
 }
-
-struct SDList {
-	sundates @0 :List(Sundata);
-}
-
 struct NestedList {
 	list @0 :List(List(Int32));
 }
