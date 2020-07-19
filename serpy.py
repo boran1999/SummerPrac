@@ -30,7 +30,6 @@ def strins(a):
 	return st
 
 this_dir = os.path.dirname(__file__)
-this_dir = os.chdir(this_dir/schemes)
 
 sd = capnp.load(os.path.join(this_dir, 'scidata.capnp'))
 mes = sd.SDList.new_message()
